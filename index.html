@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>🎉 Feliz Aniversário, Lara!</title>
+  <style>
+    body {
+      margin: 0;
+      background: #fff0f5;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    .envelope {
+      width: 300px;
+      cursor: pointer;
+      perspective: 1000px;
+    }
+
+    .envelope img {
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .message {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      max-width: 360px;
+      margin-top: 30px;
+      display: none;
+      text-align: center;
+    }
+
+    .message h2 {
+      color: #d63384;
+    }
+
+    .message p {
+      font-size: 16px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <audio id="somFogos" src="fogos.mp3" preload="auto"></audio>
+
+  <div class="envelope" id="envelope">
+    <img src="OIP.jfif" alt="Envelope Rosa com Coração">
+  </div>
+
+  <div class="message" id="mensagem">
+    <h2>Para Lara 💖</h2>
+    <p id="typed-text"></p>
+  </div>
+
+  <!-- 📦 GSAP para animação -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+  <!-- 🎇 Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- ✍️ TypeIt para texto animado -->
+  <script src="https://cdn.jsdelivr.net/npm/typeit@8.7.1/dist/index.umd.js"></script>
+
+  <script>
+    const envelope = document.getElementById("envelope");
+    const mensagem = document.getElementById("mensagem");
+    const audio = document.getElementById("somFogos");
+
+    envelope.addEventListener("click", () => {
+      // Animação do envelope com GSAP
+      gsap.to(envelope, {
+        rotationX: 90,
+        duration: 1,
+        ease: "power2.inOut",
+        onComplete: () => {
+          envelope.style.display = "none";
+          mensagem.style.display = "block";
+
+          // Efeito de texto com TypeIt
+          new TypeIt("#typed-text", {
+            speed: 50,
+            waitUntilVisible: true
+          })
+          .type("Hoje é o seu dia especial, Lara! 🎉")
+          .pause(500)
+          .break()
+          .type("Que esta data seja repleta de alegria,")
+          .pause(300)
+          .break()
+          .type("sorrisos e muito amor. 💕")
+          .pause(300)
+          .break()
+          .type("Feliz aniversário! 🥳")
+          .go();
+
+          // Tocar som de fogos
+          audio.play();
+
+          // Disparar fogos de artifício com Confetti
+          confetti({
+            particleCount: 200,
+            spread: 100,
+            origin: { y: 0.6 }
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
